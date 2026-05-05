@@ -1,29 +1,47 @@
-# 🐦 BirdChat - Virtual Communication & Digital Forensics
-### 🛠️ AVST Project: Integrated Security Platform
-[![Version](https://img.shields.io/badge/Version-1.0.0--Stable-blue.svg)]() [![Cybersecurity](https://img.shields.io/badge/Focus-Digital%20Forensics-red.svg)]() [![Dev](https://img.shields.io/badge/Developer-avst--dev-orange.svg)]()
+# 🐦 BirdChat - Open Source Real-time Chatting Platform
+### 🚀 Modern Communication Ecosystem | AVST Project
+[![License](https://img.shields.io/badge/License-Open%20Source-blue.svg)]() [![Framework](https://img.shields.io/badge/PHP-8.4-777bb4.svg)]() [![Python](https://img.shields.io/badge/Python-3.x-3776ab.svg)]()
 
-**BirdChat** adalah platform komunikasi virtual berbasis WebSocket dan PHP yang dioptimalkan untuk performa tinggi, efisiensi database, dan audit keamanan. Proyek ini merupakan bagian dari ekosistem **AVST Project** yang berfokus pada edukasi digital forensics dan pengembangan aplikasi web aman.
-
----
-
-## ⚡ Fitur Utama (Refactored)
-*   **Real-time Messaging**: Menggunakan Python WebSocket (`ws.py`) untuk transmisi pesan instan tanpa refresh halaman.
-*   **Secure Authentication**: Logika login dan registrasi yang telah divalidasi melalui PHP backend.
-*   **Database Management**: Script otomatis `manage_db.sh` untuk pembersihan data, reset total, dan ekspor database.
-*   **Cyberpunk Aesthetic**: UI/UX yang dirancang dengan tema futuristik dan clean.
+**BirdChat** adalah platform pesan instan sumber terbuka yang dibangun dengan fokus pada kecepatan, kesederhanaan, dan efisiensi. Menggunakan arsitektur *hybrid* antara PHP untuk manajemen data dan Python WebSocket untuk komunikasi dua arah yang responsif.
 
 ---
 
-## 🚀 Prasyarat Instalasi
+## ✨ Fitur Utama
+*   **Real-time Messaging**: Pengiriman pesan instan tanpa jeda menggunakan teknologi WebSocket.
+*   **Lightweight Architecture**: Desain sistem yang ringan, cocok untuk dijalankan di berbagai spesifikasi server.
+*   **Open Source Management**: Dilengkapi dengan alat manajemen database otomatis untuk memudahkan pemeliharaan.
+*   **Environment-based Config**: Konfigurasi yang mudah menggunakan file `.env` untuk keamanan dan fleksibilitas.
 
-### 1. Stack Teknologi
-Pastikan komponen berikut terinstal di sistem (Disarankan menggunakan Kali Linux):
+---
+
+## 🛠️ Persiapan Sistem
+Sebelum memulai, pastikan server Anda sudah terinstal:
 *   **Web Server**: Apache2 atau Nginx.
-*   **PHP**: Versi 8.x dengan ekstensi `mbstring`[cite: 1].
-*   **Python**: Versi 3.x untuk menjalankan WebSocket Server[cite: 1].
-*   **Database**: MariaDB atau MySQL[cite: 1].
+*   **PHP Environment**: PHP 8.4+ dengan ekstensi `mbstring` dan `php-fpm`.
+*   **Python Engine**: Python 3.x dengan library `websockets` dan `python-dotenv`.
+*   **Database**: MariaDB Server.
 
-### 2. Module Python yang Dibutuhkan
-Instal library eksternal berikut untuk mendukung server WebSocket:
+---
+
+## ⚙️ Panduan Instalasi (Deployment)
+
+### 1. Struktur Folder
+Pindahkan komponen aplikasi ke direktori standar server Anda:
 ```bash
-pip install websockets python-dotenv --break-system-packages
+# Direktori Frontend (PHP)
+sudo mv html /var/www/html/birdchat
+
+# Direktori Backend (Python & Management)
+sudo mv backend /var/www/backend
+
+# 1. Menjalankan Layanan Database & Web
+sudo service mariadb start
+sudo service php8.x-fpm start
+sudo service apache2 start  # Gunakan nginx jika diperlukan
+
+cd /var/www/backend
+python3 ws.py
+
+cd /var/www/backend
+chmod +x manage_db.sh
+./manage_db.sh
