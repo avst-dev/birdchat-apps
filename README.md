@@ -29,7 +29,7 @@ Sebelum memulai, pastikan server Anda sudah terinstal:
 Pindahkan komponen aplikasi ke direktori standar server Anda:
 ```bash
 # Direktori Frontend (PHP)
-sudo mv html /var/www/html/birdchat
+sudo mv html /var/www/
 
 # Direktori Backend (Python & Management)
 sudo mv backend /var/www/backend
@@ -42,6 +42,6 @@ sudo service apache2 start  # Gunakan nginx jika diperlukan
 cd /var/www/backend
 python3 ws.py
 
-cd /var/www/backend
-chmod +x manage_db.sh
-./manage_db.sh
+mv managedb.sh /usr/local/bin/managedb
+chmod +x managedb
+
