@@ -27,3 +27,10 @@ Pastikan komponen berikut terinstal di sistem (Disarankan menggunakan Kali Linux
 Instal library eksternal berikut untuk mendukung server WebSocket:
 ```bash
 pip install websockets python-dotenv --break-system-packages
+
+### 3. Jalankan aplikasinya
+```bash
+service mariadb start
+service php8.*-fpm start
+service nginx/apache2 start
+python3 ws.py
