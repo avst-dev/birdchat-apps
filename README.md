@@ -17,7 +17,7 @@
 ## 🛠️ Persiapan Sistem
 Sebelum memulai, pastikan server Anda sudah terinstal:
 *   **Web Server**: Apache2 atau Nginx.
-*   **PHP Environment**: PHP 8.4+ dengan ekstensi `mbstring` dan `php-fpm`.
+*   **PHP Environment**: PHP 8.4+ dengan ekstensi `php-mysql' 'mbstring` dan `php-fpm`.
 *   **Python Engine**: Python 3.x dengan library `websockets` dan `python-dotenv`.
 *   **Database**: MariaDB Server.
 
