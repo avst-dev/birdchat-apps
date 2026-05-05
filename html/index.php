@@ -1,0 +1,120 @@
+<?php
+//path tambal choocie
+require_once __DIR__ . '/scrp.php';
+// ============================================================
+//  index.php — Landing Page
+// ============================================================
+require_once __DIR__ . '/config.php';
+secureSessionConfig();
+session_start();
+sendSecurityHeaders();
+denyIframe();
+
+if (isset($_SESSION['user_id'])) { header("Location: chat"); exit(); }
+?>
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#060810">
+<title>BIRDCHAT 🐦</title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='16' fill='%2305070a'/><text y='44' x='8' font-size='40'>🐦</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+    --c:#00ffcc;--bg:#060810;
+    --ff-head:'Syne',sans-serif;
+    --ff-body:'DM Sans',sans-serif;
+}
+body{
+    font-family:var(--ff-body);
+    background:var(--bg);
+    background-image:
+        radial-gradient(ellipse 80% 60% at 50% -5%,rgba(0,255,204,0.1) 0%,transparent 60%),
+        radial-gradient(ellipse 50% 40% at 80% 100%,rgba(0,100,255,0.06) 0%,transparent 60%);
+    color:#dde6f0;
+    min-height:100dvh;
+    display:flex;align-items:center;justify-content:center;
+    padding:24px;
+    text-align:center;
+}
+.hero {
+    animation: fadeUp 0.7s cubic-bezier(0.22,1,0.36,1) both;
+}
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px);}to{opacity:1;transform:translateY(0);}}
+
+.bird {
+    font-size: 5rem;
+    display: block;
+    margin-bottom: 20px;
+    animation: floatBird 3s ease-in-out infinite;
+}
+@keyframes floatBird{0%,100%{transform:translateY(0);}50%{transform:translateY(-10px);}}
+
+h1 {
+    font-family: var(--ff-head);
+    font-weight: 800;
+    font-size: clamp(2.2rem, 8vw, 4rem);
+    letter-spacing: 6px;
+    margin-bottom: 12px;
+}
+h1 span { color: var(--c); }
+p {
+    color: #6b7a8d;
+    font-size: 14px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 48px;
+}
+
+.btns { display:flex; gap:16px; justify-content:center; flex-wrap:wrap; }
+.btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    padding: 14px 32px;
+    border-radius: 14px;
+    font-family: var(--ff-head);
+    font-weight: 700;
+    font-size: 14px;
+    letter-spacing: 1.5px;
+    text-decoration: none;
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.btn-primary {
+    background: linear-gradient(135deg, var(--c), #00c9f5);
+    color: #060810;
+    box-shadow: 0 4px 20px rgba(0,255,204,0.25);
+}
+.btn-secondary {
+    background: rgba(255,255,255,0.05);
+    color: #dde6f0;
+    border: 1px solid rgba(255,255,255,0.1);
+}
+.btn:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,255,204,0.3); }
+.btn:active { transform: scale(0.97); }
+
+.tagline {
+    margin-top: 48px;
+    font-size: 11px;
+    color: rgba(255,255,255,0.2);
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+</style>
+</head>
+<body>
+<div class="hero">
+    <span class="bird">🐦</span>
+    <h1>BIRD<span>CHAT</span></h1>
+    <p>Virtual Communication Environment</p>
+    <div class="btns">
+        <a href="login"    class="btn btn-primary">🔑 LOGIN</a>
+        <a href="register" class="btn btn-secondary">✨ DAFTAR</a>
+    </div>
+    <div class="tagline">Secure · Fast · Minimal</div>
+</div>
+</body>
+</html>
