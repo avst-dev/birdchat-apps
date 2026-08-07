@@ -1,0 +1,23 @@
+{
+  "name": "birdchat-nodejs",
+  "version": "1.0.0",
+  "description": "BirdChat - Virtual Communication Environment (Node.js version)",
+  "main": "server.js",
+  "type": "module",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "node --watch server.js"
+  },
+  "dependencies": {
+    "express": "^4.18.2",
+    "better-sqlite3": "^9.4.3",
+    "bcryptjs": "^2.4.3",
+    "dotenv": "^16.4.1",
+    "ws": "^8.16.0",
+    "express-session": "^1.17.3",
+    "cookie-parser": "^1.4.6",
+    "express-rate-limit": "^7.1.5",
+    "helmet": "^7.1.0",
+    "uuid": "^9.0.1"
+  }
+}
