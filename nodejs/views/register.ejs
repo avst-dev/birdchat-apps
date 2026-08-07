@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#060810">
+<title><%= title %></title>
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'><rect width='64' height='64' rx='16' fill='%2305070a'/><text y='44' x='8' font-size='40'>🐦</text></svg>">
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@600;700;800&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+    --c: #00ffcc;
+    --bg: #060810;
+    --panel: #0d1018;
+    --border: rgba(255,255,255,0.07);
+    --text: #dde6f0;
+    --muted: #6b7a8d;
+    --red: #ff3b6b;
+    --warn: #f59e0b;
+    --ff-head: 'Syne', sans-serif;
+    --ff-body: 'DM Sans', sans-serif;
+}
+*, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+body {
+    font-family: var(--ff-body);
+    background: var(--bg);
+    background-image:
+        radial-gradient(ellipse 60% 50% at 50% -10%, rgba(0,255,204,0.08) 0%, transparent 60%),
+        radial-gradient(ellipse 40% 40% at 80% 90%, rgba(0,80,200,0.06) 0%, transparent 60%);
+    color: var(--text);
+    min-height: 100dvh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+}
+
+.card {
+    width: 100%;
+    max-width: 420px;
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 40px 36px 32px;
+    box-shadow: 0 0 0 1px rgba(0,255,204,0.04), 0 24px 64px rgba(0,0,0,0.7);
+    position: relative;
+    overflow: hidden;
+    animation: fadeUp 0.55s cubic-bezier(0.22,1,0.36,1) both;
+}
+.card::before {
+    content: '';
+    position: absolute;
+    top:0; left:10%; right:10%;
+    height:1px;
+    background: linear-gradient(90deg, transparent, var(--c), transparent);
+}
+@keyframes fadeUp {
+    from { opacity:0; transform:translateY(24px); }
+    to   { opacity:1; transform:translateY(0); }
+}
+
+.logo-wrap {
+    text-align: center;
+    margin-bottom: 28px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+}
+.logo-icon { font-size: 2.5rem; animation: floatBird 3s ease-in-out infinite; }
+@keyframes floatBird {
+    0%,100% { transform:translateY(0); }
+    50%      { transform:translateY(-5px); }
+}
+.logo-text { font-family: var(--ff-head); font-weight:800; font-size:1.6rem; letter-spacing:4px; }
+.logo-text span { color: var(--c); }
+.logo-sub { font-size:11px; color: var(--muted); letter-spacing:1px; }
+
+/* Attempt meter */
+.meter-wrap { margin-bottom:20px; }
+.meter-head { display:flex; justify-content:space-between; align-items:center; margin-bottom:7px; }
+.meter-label { font-size:10px; font-weight:700; letter-spacing:1.5px; text-transform:uppercase; color:var(--muted); font-family:var(--ff-head); }
+.meter-badge { font-family:var(--ff-head); font-size:10px; padding:2px 8px; border-radius:20px; font-weight:700; border:1px solid; }
+.badge-ok   { color:var(--c);    border-color:rgba(0,255,204,0.4);  background:rgba(0,255,204,0.06); }
+.badge-warn { color:var(--warn); border-color:rgba(245,158,11,0.4); background:rgba(245,158,11,0.06); }
+.badge-bad  { color:var(--red);  border-color:rgba(255,59,107,0.4); background:rgba(255,59,107,0.06); }
+.meter-track { height:4px; background:rgba(255,255,255,0.06); border-radius:999px; overflow:hidden; }
+.meter-fill {
+    height:100%; border-radius:999px;
+    width: <%= (rlInfo.used / 3) * 100 %>%;
+    background: <%= rlInfo.used <= 1 ? 'var(--c)' : (rlInfo.used <= 2 ? 'var(--warn)' : 'var(--red)') %>;
+    transition: width 0.5s ease;
+}
+
+/* Block */
+.block-box {
+    background: rgba(255,59,107,0.07);
+    border: 1px solid rgba(255,59,107,0.25);
+    border-radius:16px;
+    padding:18px;
+    margin-bottom:20px;
+    text-align:center;
+}
+.block-box .block-icon { font-size:2rem; margin-bottom:8px; }
+.block-box .block-title { font-family:var(--ff-head); font-weight:700; color:var(--red); font-size:14px; letter-spacing:1px; }
+.block-box .block-cd { font-size:13px; color:var(--muted); margin-top:6px; }
+.block-box strong { color:var(--text); }
+
+/* Alerts */
+.alert {
+    padding:12px 14px; border-radius:12px;
+    margin-bottom:18px; font-size:13px; line-height:1.6;
+}
+.alert.success { background:rgba(0,255,204,0.07); color:var(--c); border:1px solid rgba(0,255,204,0.25); }
+.alert.success a { color:var(--c); font-weight:700; }
+.alert.error   { background:rgba(255,59,107,0.07); color:var(--red); border:1px solid rgba(255,59,107,0.25); }
+
+.field { margin-bottom:16px; }
+label {
+    display:block; font-size:10.5px; font-weight:700;
+    letter-spacing:1.5px; text-transform:uppercase;
+    color:var(--c); font-family:var(--ff-head);
+    margin-bottom:7px; opacity:0.8;
+}
+input[type="text"], input[type="password"] {
+    width:100%; background:rgba(255,255,255,0.04);
+    border:1px solid var(--border); color:var(--text);
+    padding:13px 15px; border-radius:14px;
+    font-size:15px; font-family:var(--ff-body);
+    outline:none; -webkit-appearance:none; appearance:none;
+    transition: border-color 0.25s, box-shadow 0.25s, opacity 0.2s;
+}
+input[type="text"]:focus, input[type="password"]:focus { border-color:rgba(0,255,204,0.4); box-shadow:0 0 0 3px rgba(0,255,204,0.07); }
+input::placeholder { color:var(--muted); }
+input:disabled { opacity:0.3; cursor:not-allowed; }
+
+.btn {
+    width:100%;
+    background:linear-gradient(135deg,var(--c),#00c9f5);
+    color:#060810; border:none;
+    padding:15px; border-radius:14px;
+    font-weight:800; font-family:var(--ff-head);
+    font-size:14px; letter-spacing:1.5px;
+    cursor:pointer; margin-top:6px;
+    transition:transform 0.2s, box-shadow 0.2s, opacity 0.2s;
+}
+.btn:hover:not(:disabled) { transform:translateY(-2px); box-shadow:0 8px 24px rgba(0,255,204,0.28); }
+.btn:disabled { opacity:0.3; cursor:not-allowed; }
+.btn:active:not(:disabled) { transform:scale(0.98); }
+
+.footer { text-align:center; margin-top:24px; font-size:13px; color:var(--muted); }
+.footer a { color:var(--c); text-decoration:none; font-weight:600; }
+.footer a:hover { text-decoration:underline; }
+</style>
+</head>
+<body>
+<div class="card">
+    <div class="logo-wrap">
+        <div class="logo-icon">🐦</div>
+        <div class="logo-text">BIRD<span>CHAT</span></div>
+        <div class="logo-sub">BUAT AKUN BARU</div>
+    </div>
+
+    <%
+    const bc = rlInfo.used <= 1 ? 'badge-ok' : (rlInfo.used <= 2 ? 'badge-warn' : 'badge-bad');
+    const bt = rlInfo.blocked ? '0/3' : rlInfo.remaining+'/3';
+    %>
+    <div class="meter-wrap">
+        <div class="meter-head">
+            <span class="meter-label">Sisa Percobaan</span>
+            <span class="meter-badge <%= bc %>"><%= bt %></span>
+        </div>
+        <div class="meter-track"><div class="meter-fill"></div></div>
+    </div>
+
+    <% if (rlInfo.blocked) { %>
+    <div class="block-box">
+        <div class="block-icon">🔒</div>
+        <div class="block-title">Akses Sementara Diblokir</div>
+        <div class="block-cd">Tunggu <strong id="cd"><%= rlInfo.wait %>s</strong> sebelum mencoba lagi.</div>
+    </div>
+    <% } else if (typeof message !== 'undefined' && message) { %>
+    <div class="alert <%= msgType || 'error' %>"><%= message %></div>
+    <% } %>
+
+    <form method="POST" action="/register" autocomplete="off">
+        <input type="hidden" name="csrf_token" value="<%= csrfToken %>">
+        <div class="field">
+            <label>👤 Username</label>
+            <input type="text" name="username" placeholder="hanya huruf, angka, _"
+                   maxlength="50" pattern="[a-zA-Z0-9_]{3,50}" required autocomplete="off"
+                   <%= rlInfo.blocked ? 'disabled' : '' %>>
+        </div>
+        <div class="field">
+            <label>🔑 Password</label>
+            <input type="password" name="password" placeholder="Minimal 8 karakter"
+                   minlength="8" maxlength="128" required
+                   <%= rlInfo.blocked ? 'disabled' : '' %>>
+        </div>
+        <div class="field">
+            <label>✏️ Nama Lengkap</label>
+            <input type="text" name="fullname" placeholder="Nama Anda (opsional)"
+                   maxlength="100" autocomplete="off"
+                   <%= rlInfo.blocked ? 'disabled' : '' %>>
+        </div>
+        <button type="submit" class="btn" <%= rlInfo.blocked ? 'disabled' : '' %>>
+            DAFTAR SEKARANG →
+        </button>
+    </form>
+
+    <div class="footer">
+        Sudah punya akun? <a href="/login">Login di sini</a>
+    </div>
+</div>
+
+<% if (rlInfo.blocked && rlInfo.wait > 0) { %>
+<script>
+(function(){
+    var s=<%= rlInfo.wait %>,el=document.getElementById('cd');
+    var t=setInterval(function(){
+        s--;el.textContent=s+'s';
+        if(s<=0){clearInterval(t);location.reload();}
+    },1000);
+})();
+</script>
+<% } %>
+
+<script>
+// Form submission handler
+document.querySelector('form').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const btn = this.querySelector('.btn');
+    btn.textContent = 'MEMproses...';
+    btn.disabled = true;
+    
+    const formData = new FormData(this);
+    fetch('/register', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+        },
+        body: new URLSearchParams(formData).toString()
+    })
+    .then(res => res.json())
+    .then(data => {
+        if (data.success) {
+            // Show success message
+            const alertDiv = document.createElement('div');
+            alertDiv.className = 'alert success';
+            alertDiv.innerHTML = data.message;
+            this.insertBefore(alertDiv, this.querySelector('.meter-wrap'));
+            btn.textContent = 'DAFTAR SEKARANG →';
+            btn.disabled = false;
+        } else {
+            btn.textContent = 'DAFTAR SEKARANG →';
+            btn.disabled = false;
+            alert(data.error || 'Registrasi gagal');
+        }
+    })
+    .catch(err => {
+        btn.textContent = 'DAFTAR SEKARANG →';
+        btn.disabled = false;
+        alert('Terjadi kesalahan. Coba lagi.');
+    });
+});
+</script>
+</body>
+</html>
